@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { StudentEntity } from '../common/entity/student.entity';
-import StudentRepository from 'src/common/repository/student.repository';
+import { StudentEntity } from '../../common/entity/student.entity';
+import { StudentRepository } from '../../common/repository/student.repository';
 
 @Injectable()
 export class StudentsService {
   constructor(
-    @InjectRepository(StudentEntity)
+    // @InjectRepository(StudentEntity)
     private studentRepository: StudentRepository,
   ) {}
 
@@ -15,7 +14,7 @@ export class StudentsService {
     try {
       return await this.studentRepository.findAll();
     } catch (err) {
-      throw new Error('Failed to fetch students');
+      throw new Error('Failed to fetch students ' + err);
     }
   }
 
@@ -23,7 +22,7 @@ export class StudentsService {
     try {
       return await this.studentRepository.findOneById(id);
     } catch (err) {
-      throw new Error('Failed to fetch student with id: ' + id);
+      throw new Error('Failed to fetch student with id: ' + id + ' ' + err);
     }
   }
 
@@ -31,7 +30,7 @@ export class StudentsService {
     try {
       return await this.studentRepository.createStudent(student);
     } catch (err) {
-      throw new Error('Failed to create student');
+      throw new Error('Failed to create student ' + err);
     }
   }
 
@@ -42,7 +41,7 @@ export class StudentsService {
     try {
       return await this.studentRepository.updateStudent(id, student);
     } catch (err) {
-      throw new Error('Failed to update student with id: ' + id);
+      throw new Error('Failed to update student with id: ' + id + ' ' + err);
     }
   }
 
@@ -50,7 +49,7 @@ export class StudentsService {
     try {
       await this.studentRepository.deleteStudent(id);
     } catch (err) {
-      throw new Error('Failed to delete student with id: ' + id);
+      throw new Error('Failed to delete student with id: ' + id + ' ' + err);
     }
   }
 }

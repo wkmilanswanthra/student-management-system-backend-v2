@@ -1,7 +1,13 @@
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { StudentEntity } from '../entity/student.entity';
+import { Injectable } from '@nestjs/common';
 
-export default class StudentRepository extends Repository<StudentEntity> {
+@Injectable()
+export class StudentRepository extends Repository<StudentEntity> {
+  constructor(private dataSource: DataSource) {
+    super(StudentEntity, dataSource.createEntityManager());
+  }
+
   public async findAll(): Promise<StudentEntity[]> {
     return await this.find();
   }

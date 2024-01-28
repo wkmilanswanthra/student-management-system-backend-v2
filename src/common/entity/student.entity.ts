@@ -1,8 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, Timestamp } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-@Entity()
+@Entity('student')
 export class StudentEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column({ length: 50 })
@@ -11,8 +17,8 @@ export class StudentEntity {
   @Column({ length: 50 })
   lastName: string;
 
-  @Column({ length: 50 })
-  dateOfBirth: Timestamp;
+  @Column({ type: 'timestamptz' })
+  dateOfBirth: Date;
 
   @Column({ length: 50 })
   email: string;
@@ -23,9 +29,9 @@ export class StudentEntity {
   @Column({ length: 50 })
   address: string;
 
-  @Column({ length: 50 })
-  created_at: Timestamp;
+  @CreateDateColumn()
+  created_at: Date;
 
-  @Column({ length: 50 })
-  updated_at: Timestamp;
+  @UpdateDateColumn()
+  updated_at: Date;
 }

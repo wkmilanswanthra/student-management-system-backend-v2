@@ -7,8 +7,8 @@ import {
   Body,
   Param,
 } from '@nestjs/common';
-import { StudentsService } from './students.service';
-import { StudentEntity } from '../common/entity/student.entity';
+import { StudentsService } from '../services/students.service';
+import { StudentEntity } from '../../common/entity/student.entity';
 
 @Controller('students')
 export class StudentsController {
