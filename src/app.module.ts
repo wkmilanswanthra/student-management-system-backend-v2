@@ -27,6 +27,7 @@ console.log('dile path ' + envFilePath);
       database: process.env.RDS_DB_NAME || 'students',
       entities: [StudentEntity],
       synchronize: true,
+      ssl: true,
     }),
     AuthModule,
   ],
