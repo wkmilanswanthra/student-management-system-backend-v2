@@ -3,6 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { StudentEntity } from '../../common/entity/student.entity';
 import { StudentRepository } from '../../common/repository/student.repository';
 
+interface searchResponse {
+  data: StudentEntity[];
+  meta: {
+    total: number;
+    page: number;
+    last_page: number;
+  };
+}
+
 @Injectable()
 export class StudentsService {
   constructor(
@@ -10,9 +19,13 @@ export class StudentsService {
     private studentRepository: StudentRepository,
   ) {}
 
-  async findAll(): Promise<StudentEntity[]> {
+  async getTotalCount(): Promise<number> {
+    return this.studentRepository.getTotalCount();
+  }
+
+  async findAll(page: number, limit: number): Promise<StudentEntity[]> {
     try {
-      return await this.studentRepository.findAll();
+      return await this.studentRepository.findAll(page, limit);
     } catch (err) {
       throw new Error('Failed to fetch students ' + err);
     }
@@ -23,6 +36,31 @@ export class StudentsService {
       return await this.studentRepository.findOneById(id);
     } catch (err) {
       throw new Error('Failed to fetch student with id: ' + id + ' ' + err);
+    }
+  }
+
+  async search(
+    keyword: string,
+    page: number,
+    limit: number,
+  ): Promise<searchResponse> {
+    try {
+      return await this.studentRepository.search(keyword, page, limit);
+    } catch (err) {
+      throw new Error('Failed to search students ' + err);
+    }
+  }
+
+  async filterByDOB(
+    min: Date,
+    max: Date,
+    page: number,
+    limit: number,
+  ): Promise<searchResponse> {
+    try {
+      return await this.studentRepository.filterByDOB(min, max, page, limit);
+    } catch (err) {
+      throw new Error('Failed to filter students ' + err);
     }
   }
 

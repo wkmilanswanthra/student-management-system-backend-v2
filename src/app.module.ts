@@ -5,10 +5,22 @@ import { StudentsModule } from './students/modules/students.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { StudentEntity } from './common/entity/student.entity';
 import { ConfigModule } from '@nestjs/config';
+import { getEnvPath } from './common/config/env.helper';
+import { AuthModule } from './auth/modules/auth.module';
+import { AuthController } from './auth/controller/auth.controller';
+import { AuthService } from './auth/services/auth.service';
+import { AuthConfig } from './common/config/auth.config';
+
+const envFilePath: string = getEnvPath(`./envfiles`);
+
+console.log('dile path ' + envFilePath);
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath,
+      isGlobal: true,
+    }),
     StudentsModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -20,8 +32,9 @@ import { ConfigModule } from '@nestjs/config';
       entities: [StudentEntity],
       synchronize: true,
     }),
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, AuthController],
+  providers: [AppService, AuthService, AuthConfig],
 })
 export class AppModule {}
