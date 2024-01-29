@@ -25,7 +25,7 @@ export class StudentRepository extends Repository<StudentEntity> {
     return await this.find({
       skip: limit * (page - 1),
       take: limit,
-      order: { created_at: 'ASC' },
+      order: { id: 'ASC' },
     });
   }
 
@@ -57,6 +57,7 @@ export class StudentRepository extends Repository<StudentEntity> {
       })
       .skip(limit * (page - 1))
       .take(limit)
+      .orderBy('id', 'ASC')
       .getManyAndCount();
 
     return {
@@ -85,6 +86,7 @@ export class StudentRepository extends Repository<StudentEntity> {
       })
       .skip(limit * (page - 1))
       .take(limit)
+      .orderBy('id', 'ASC')
       .getManyAndCount();
 
     return {

@@ -58,4 +58,23 @@ export class AuthService {
       );
     });
   }
+
+  signOut(email: string) {
+    // this.userPool.getCurrentUser()?.signOut();
+    const userData = {
+      Username: email,
+      Pool: this.userPool,
+    };
+    const user = new CognitoUser(userData);
+    try {
+      return new Promise((resolve, reject) => {
+        user.globalSignOut({
+          onSuccess: (result) => resolve(result),
+          onFailure: (err) => reject(err),
+        });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }

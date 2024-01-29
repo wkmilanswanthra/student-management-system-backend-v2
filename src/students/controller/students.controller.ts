@@ -31,7 +31,7 @@ export class StudentsController {
   @Get()
   @UseGuards(AuthGuard('jwt'))
   async findAll(
-    @Query('keyword') keyword,
+    @Query('keyword') keyword: string,
     @Query('page') page = 1,
     @Query('limit') limit = 10,
   ): Promise<PaginatedResponse> {

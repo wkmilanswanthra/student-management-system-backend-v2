@@ -20,4 +20,9 @@ export class AuthController {
   async register(@Body() registerRequest: { password: string; email: string }) {
     return await this.authService.registerUser(registerRequest);
   }
+
+  @Post('logout')
+  async logout(@Body() email: string) {
+    return await this.authService.signOut(email);
+  }
 }
