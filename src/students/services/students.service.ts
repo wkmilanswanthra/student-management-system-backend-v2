@@ -52,13 +52,12 @@ export class StudentsService {
   }
 
   async filterByDOB(
-    min: Date,
-    max: Date,
+    range: object,
     page: number,
     limit: number,
   ): Promise<searchResponse> {
     try {
-      return await this.studentRepository.filterByDOB(min, max, page, limit);
+      return await this.studentRepository.filterByDOB(range, page, limit);
     } catch (err) {
       throw new Error('Failed to filter students ' + err);
     }

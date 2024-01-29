@@ -59,15 +59,14 @@ export class StudentsController {
     return await this.studentsService.findOneById(id);
   }
 
-  @Get('/filter')
+  @Post('/filter')
   @UseGuards(AuthGuard('jwt'))
   async filterByDOB(
-    @Body() min: Date,
-    @Body() max: Date,
+    @Body() range: Date,
     @Query('page') page = 1,
     @Query('limit') limit = 10,
   ): Promise<PaginatedResponse> {
-    return await this.studentsService.filterByDOB(min, max, page, limit);
+    return await this.studentsService.filterByDOB(range, page, limit);
   }
 
   //Create a student

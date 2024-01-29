@@ -71,13 +71,13 @@ export class StudentRepository extends Repository<StudentEntity> {
   }
 
   public async filterByDOB(
-    min: Date,
-    max: Date,
+    range: object,
     page: number,
     limit: number,
   ): Promise<searchResponse> {
-    min = new Date(min);
-    max = new Date(max);
+    console.log(range);
+    const min = range['min'];
+    const max = range['max'];
     const response = await this.createQueryBuilder()
       .select()
       .where('"dateOfBirth" BETWEEN :min AND :max', {
