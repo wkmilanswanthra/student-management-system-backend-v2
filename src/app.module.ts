@@ -17,18 +17,14 @@ console.log('dile path ' + envFilePath);
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath,
-      isGlobal: true,
-    }),
     StudentsModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT) || 5432,
-      username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'root',
-      database: process.env.DB_DATABASE || 'students',
+      host: process.env.RDS_HOSTNAME || 'localhost',
+      port: parseInt(process.env.RDS_PORT) || 5432,
+      username: process.env.RDS_PASSWORD || 'postgres',
+      password: process.env.RDS_USERNAME || 'root',
+      database: process.env.RDS_DB_NAME || 'students',
       entities: [StudentEntity],
       synchronize: true,
     }),
